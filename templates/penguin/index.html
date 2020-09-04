@@ -6,7 +6,7 @@
 
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
 
-	<link rel="stylesheet" type="text/css" href="{% static 'css/style5.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style6.css' %}">
 
 
 </head>
@@ -125,11 +125,14 @@
 		<div class="circle circle-3"></div>
 	</div>
 
-	<div class="alert-container">
-		
+	<div class="alert">
+		<div class="alert-container">
 			<h4>Missing input. Please fill in your input!</h4>
 			<button type="button" class="alert-btn">Close</button>
+		</div>
 	</div>
+
+	
 
 	
 		
@@ -148,14 +151,15 @@
 		}
 
 		function radioAlert() {
-			let alertBox = document.querySelector(".alert-container");
+			let alertBox = document.querySelector(".alert");
+			let alert = document.querySelector(".alert-container")
 			console.log(alertBox)
 			alertBox.classList.add("animate");
 
 			let alertBtn = document.querySelector('.alert-btn');
 			alertBtn.addEventListener('click', (e) => {
 				console.log(alertBox)
-				alertBox.classList.remove("animate")
+				alertBox.classList.remove("animate");
 			})
 		}
 
