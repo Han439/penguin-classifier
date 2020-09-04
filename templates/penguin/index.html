@@ -12,7 +12,7 @@
 </head>
 <body>
 
-	<div class="filter-container">
+	<div class="filter-container hidden">
 		<div class="filter-inner">
 			<h3 class="title">Penguin Classifier</h3>
 			<form method="POST" class="filter-form" id="filter-form" action="{% url 'decision-tree-predict' %}">
@@ -97,6 +97,12 @@
 
 			</form>
 		</div>
+		<div class="alert">
+			<div class="alert-container">
+				<h4>Missing input. Please fill in your input!</h4>
+				<button type="button" class="alert-btn">Close</button>
+			</div>
+		</div>
 	</div>
 
 	<div id="result" class="filter-container result-container">
@@ -119,18 +125,13 @@
 
 	</div>
 
-	<div class="loading hidden">
+	<div class="loading">
 		<div class="circle circle-1"></div>
 		<div class="circle circle-2"></div>
 		<div class="circle circle-3"></div>
 	</div>
 
-	<div class="alert">
-		<div class="alert-container">
-			<h4>Missing input. Please fill in your input!</h4>
-			<button type="button" class="alert-btn">Close</button>
-		</div>
-	</div>
+	
 
 	
 
@@ -139,6 +140,20 @@
 	
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script type="text/javascript">
+		// loader window
+
+		$(window).on('load', function() {
+			let content = $('.filter-container')
+			let loader = $('.loading')
+			loader.fadeOut(750, function() {
+				
+				content.fadeIn(500)
+				console.log(loader)
+			})
+
+		})
+
+
 		// radio button validation
 		function isRadioValidated(name) {
 			let inputs = document.querySelectorAll(`input[name=${name}]`);
@@ -231,14 +246,15 @@
         		dataType: "json",
 
 				beforeSend: function() {
-					$('.loading').removeClass('hidden')
+					$('.loading').fadeIn()
 				},
 
 				complete: function() {
-					$('.loading').addClass('hidden')
+					$('.loading').fadeOut()
 				},
 
 				success: function(res) {
+					console.log(res)
 					for (i = 0; i < results.length; i++) {
 						if (res.result == results[i].getAttribute('data-prediction'))
 							results[i].classList.remove('hidden')
