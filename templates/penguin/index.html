@@ -6,7 +6,7 @@
 
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
 
-	<link rel="stylesheet" type="text/css" href="{% static 'css/style4.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style5.css' %}">
 
 
 </head>
@@ -124,10 +124,42 @@
 		<div class="circle circle-2"></div>
 		<div class="circle circle-3"></div>
 	</div>
+
+	<div class="alert-container">
+		
+			<h4>Missing input. Please fill in your input!</h4>
+			<button type="button" class="alert-btn">Close</button>
+	</div>
+
+	
 		
 	
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script type="text/javascript">
+		// radio button validation
+		function isRadioValidated(name) {
+			let inputs = document.querySelectorAll(`input[name=${name}]`);
+			for (i of inputs) {
+				if (i.checked)
+					return true
+			}
+
+			return false
+		}
+
+		function radioAlert() {
+			let alertBox = document.querySelector(".alert-container");
+			console.log(alertBox)
+			alertBox.classList.add("animate");
+
+			let alertBtn = document.querySelector('.alert-btn');
+			alertBtn.addEventListener('click', (e) => {
+				console.log(alertBox)
+				alertBox.classList.remove("animate")
+			})
+		}
+
+
 		let sliders = document.querySelectorAll('.slider');
 		let values = document.querySelectorAll('.value');
 		let result = document.getElementById('result');
@@ -181,7 +213,9 @@
 
 			console.log(JSON.stringify(data))
 
-			$.ajax({
+			if (isRadioValidated('island') && isRadioValidated('sex')) {
+
+				$.ajax({
 				type: "POST",
 				url: url,
 				headers: {
@@ -211,6 +245,11 @@
 				//error: function() {}
 			})
 
+			}else{
+				radioAlert();
+			}
+
+			
 			// fetch(url, {
 			// 	method: 'POST',
 			// 	headers: {

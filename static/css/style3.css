@@ -1,0 +1,273 @@
+/*root*/
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+:root{
+	/* basic var */
+	--body-bg: #dfe8ea;
+	--form-bg: #f7f7f7;
+	--title: #4a4a4b;
+	--label: #c1c1c1;
+	--title-font: 'Share Tech Mono', monospace;
+	--label-font: 'Montserrat';
+
+	/* custom var  color: #212529*/
+	--input-shadow: #bcdfdf;
+	--input-main: #51ccbc;
+	--input-secondary: #e3e3e3;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+hr {
+	margin: 0;
+	padding: 0;
+}
+
+img {
+	width: 100%;
+}
+
+body {
+	font-size: 16px;
+	background-color: var(--body-bg);
+	font-family: 'Montserrat'
+}
+
+.filter-container {
+	width: 50%;
+	margin: 30px auto;
+	background-color: var(--form-bg);
+	border-radius: 30px;
+	box-shadow: 0px 7px 40px -3px rgba(0,0,0,0.2);
+}
+
+.filter-inner {
+	padding: 40px 30px;
+}
+
+.title {
+	text-align: center;
+	font-family: var(--title-font);
+	color: var(--title);
+	font-weight: bolder;
+	margin-bottom: 30px;
+}
+
+.input-container {
+	padding: 20px 0px;
+}
+
+.input-container h4 {
+	color: var(--label);
+	font-size: .8rem;
+	font-weight: bold;
+	margin-bottom: 18px;
+}
+
+/* Radio input */
+
+.radio-layout {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+
+}
+
+input[type=radio] {
+	/*background-color: red;
+	border: 5px solid ;
+	width: 20px;
+	height: 20px;*/
+	display: none;
+}
+
+.radio-layout label {
+	position: relative;
+}
+
+.radio-label {
+	color: var(--title);
+	font-family: var(--title-font);
+	cursor: pointer;
+	display: inline-block;
+	width: 150px;
+}
+
+.radio-label span {
+	display: inline-block;
+	transform: translateY(-50%);
+}
+
+.radio-label:before {
+	content: "";
+	display: inline-block;
+	margin-right: 10px;
+	width: 25px;
+	height: 25px;
+	background-color: var(--form-bg);
+	border: 2px solid var(--input-secondary);
+	border-radius: 4px;
+}
+
+.radio-label:after {
+	content: "";
+	display: inline-block;
+	margin-right: 10px;
+	width: 18px;
+	height: 18px;
+	background-color: var(--input-main);
+	border-radius: 5px;
+	position: absolute;
+	left: 4%;
+	top: 15%;
+	opacity: 0;
+}
+
+input[type=radio]:checked + .radio-label:after {
+	opacity: 1;
+}
+
+/* Slider input */
+
+.slide-container {
+	position: relative;
+}
+
+.slider {
+	-webkit-appearance: none;  /* Override default CSS styles */
+  	appearance: none;
+  	outline: none;
+	width: 100%;
+	height: 5px;
+	background-color: var(--input-secondary);
+	border-radius: 10px;
+}
+
+.value {
+	width: 50%;
+	height: 5px;
+	background-color: var(--input-main);
+	border-radius: 10px;
+	position: absolute;
+	z-index: 10;
+	top: 55%;
+	left: 0;
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider {
+	cursor: pointer;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 15px; /* Set a specific slider handle width */
+  height: 15px; /* Slider handle height */
+  border-radius: 50%;
+  background: var(--input-main); /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-webkit-slider-thumb:hover {
+	border: 1px solid #fff;
+	width: 17px;
+	height: 17px
+}
+
+.slider::-moz-range-thumb {
+  width: 15px; /* Set a specific slider handle width */
+  height: 15px; /* Slider handle height */
+  border-radius: 50%;
+  background: var(--input-main); /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb:hover {
+	border: 5px solid #fff;
+	width: 25px;
+	height: 25px
+}
+
+/* Button */
+
+.btn-container {
+	margin-top: 20px;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+	
+.btn {
+	width: 90%;
+	height: 35px;
+	color: #fff;
+	font-family: var(--title-font);
+	font-weight: bold;
+	background-color: var(--input-main);
+	border-radius: 20px;
+	cursor: pointer;
+	outline: none;
+	border: none;
+	
+}
+
+/* Loading */
+
+.loading {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+@keyframes loading {
+	to {
+		transform: translateY(-50%);
+	}
+}
+
+.circle {
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background-color: var(--input-main);
+	animation-name: loading;
+	animation-duration: 0.5s;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	display: none;
+}
+
+.circle-1 {
+	
+}
+
+.circle-2 {
+	margin: 0 10px;
+	animation-delay: 0.2s;
+}
+
+.circle-3 {
+	animation-delay: 0.4s;
+}
+
+
+
+/* Mobile */
+
+@media (max-width: 900px) {
+	.filter-container {
+		width: 100%;
+		margin: auto;
+		border-radius: 0px;
+		box-shadow: none;
+	}
+}
