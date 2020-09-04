@@ -1,0 +1,237 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Penguin Classifier</title>
+
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style4.css' %}">
+
+
+</head>
+<body>
+
+	<div class="filter-container">
+		<div class="filter-inner">
+			<h3 class="title">Penguin Classifier</h3>
+			<form method="POST" class="filter-form" id="filter-form" action="{% url 'decision-tree-predict' %}">
+				<div class="input-container">
+					<h4>Island:</h4>
+					<div class="radio-layout">
+						<label>
+							<input type="radio" name="island" value="Torgersen">
+							<span class="radio-label"><span>Torgersen</span></span>
+						</label>
+
+						<label>
+							<input type="radio" name="island" value="Biscoe">
+							<span class="radio-label"><span>Biscoe</span></span> 
+						</label>
+
+						<label>
+							<input type="radio" name="island" value="Dream">
+							<span class="radio-label"><span>Dream</span></span> 
+						</label>
+					</div>
+				</div>
+				<hr>
+				<div class="input-container">
+					<h4>Bill Length (mm):</h4>
+					<div class="slide-container">
+						<input type="range" min="0" max="100" value="50" class="slider" name="bill_length_mm">
+						<div class="value"></div>
+					</div>
+				</div>
+
+				<div class="input-container">
+					<h4>Bill Depth (mm):</h4>
+					<div class="slide-container">
+						<input type="range" min="0" max="30" value="15" class="slider" name="bill_depth_mm">
+						<div class="value"></div>
+					</div>
+					
+				</div>
+
+				<div class="input-container">
+					<h4>Flipper Length (mm):</h4>
+					<div class="slide-container">
+						<input type="range" min="100" max="300" value="200" class="slider" name="flipper_length_mm">
+						<div class="value"></div>
+					</div>
+					
+				</div>
+
+				<div class="input-container">
+					<h4>Body Mass (g):</h4>
+					<div class="slide-container">
+						<input type="range" min="1000" max="8000" value="4500" class="slider" name="body_mass_g">
+						<div class="value"></div>
+					</div>
+					
+				</div>
+
+				<hr>
+
+				<div class="input-container">
+					<h4>Sex:</h4>
+					<div class="radio-layout" style="justify-content: space-around;">
+						<label>
+							<input type="radio" name="sex" value="male">
+							<span class="radio-label"><span>Male</span></span>
+						</label>
+
+						<label>
+							<input type="radio" name="sex" value="female">
+							<span class="radio-label"><span>Female</span></span> 
+						</label>
+
+					</div>
+				</div>
+
+				<div class="input-container">
+					<div class="btn-container">
+						<input type="submit" name="" value="Apply" class="btn">
+					</div>
+				</div>
+
+			</form>
+		</div>
+	</div>
+
+	<div id="result" class="filter-container result-container">
+		<div data-prediction="Adelie" class="filter-inner hidden">
+			<img src="{% static 'image/Adelie.jpg' %}">
+			<h4>Adelie Penguin</h4>
+		</div>
+
+		<div data-prediction="Gentoo" class="filter-inner hidden">
+			
+			<img src="{% static 'image/Gentooo.jpg' %}">
+			<h4>Gentoo Penguin</h4>
+		</div>
+
+		<div data-prediction="Chinstrap" class="filter-inner hidden">
+			
+			<img src="{% static 'image/Chinstrap.jpg' %}">
+			<h4>Chinstrap Penguin</h4>
+		</div>
+
+	</div>
+
+	<div class="loading hidden">
+		<div class="circle circle-1"></div>
+		<div class="circle circle-2"></div>
+		<div class="circle circle-3"></div>
+	</div>
+		
+	
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		let sliders = document.querySelectorAll('.slider');
+		let values = document.querySelectorAll('.value');
+		let result = document.getElementById('result');
+		let results = result.children;
+
+		result.addEventListener('click', function(e) {
+			if (e.target.localName == 'img')
+				result.classList.add('full');
+			else result.classList.remove('full');
+		})
+
+		for (i = 0; i < sliders.length; i++) {
+			sliders[i].oninput = function() {
+				let val = ((Number(this.value) - Number(this.min)) / (Number(this.max)-Number(this.min))) * 100
+				this.nextElementSibling.style.width = JSON.stringify(val) + "%"
+			}
+		}
+
+
+		function getCookie(name) {
+		    let cookieValue = null;
+		    if (document.cookie && document.cookie !== '') {
+		        const cookies = document.cookie.split(';');
+		        for (let i = 0; i < cookies.length; i++) {
+		            const cookie = cookies[i].trim();
+		            // Does this cookie string begin with the name we want?
+		            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+		                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+		                break;
+		            }
+		        }
+		    }
+		    return cookieValue;
+		}
+		const csrftoken = getCookie('csrftoken');
+
+		form = document.getElementById('filter-form');
+
+		form.addEventListener('submit', function(e) {
+			e.preventDefault()
+			let url = 'http://127.0.0.1:8000/api/dt-predict/';
+
+			// construc json data to be sent
+			data = {};
+			const formData = new FormData(this);
+			for (let input of formData) {
+				if (['island', 'sex'].includes(input[0])) {
+					data[input[0]] = input[1]
+				}else{ data[input[0]] = Number(input[1])}
+			};
+
+			console.log(JSON.stringify(data))
+
+			$.ajax({
+				type: "POST",
+				url: url,
+				headers: {
+					'Content-type': 'application/json',
+					'X-CSRFToken': csrftoken,
+				},
+				data: JSON.stringify(data),
+				contentType: "application/json; charset=utf-8",
+        		dataType: "json",
+
+				beforeSend: function() {
+					$('.loading').removeClass('hidden')
+				},
+
+				complete: function() {
+					$('.loading').addClass('hidden')
+				},
+
+				success: function(res) {
+					for (i = 0; i < results.length; i++) {
+						if (res.result == results[i].getAttribute('data-prediction'))
+							results[i].classList.remove('hidden')
+						else results[i].classList.add('hidden')
+					}
+				},
+
+				//error: function() {}
+			})
+
+			// fetch(url, {
+			// 	method: 'POST',
+			// 	headers: {
+			// 		'Content-type': 'application/json',
+			// 		'X-CSRFToken': csrftoken,
+			// 	},
+			// 	body: JSON.stringify(data)
+			// }).then((res) => res.json())
+			// .then(function(res) {
+				
+			// 	console.log(res.result)
+			// 	for (i = 0; i < results.length; i++) {
+			// 		if (res.result == results[i].getAttribute('data-prediction'))
+			// 			results[i].classList.remove('hidden')
+			// 		else results[i].classList.add('hidden')
+			// 	}
+				
+			// })
+		})
+
+	</script>
+
+</body>
+</html>
