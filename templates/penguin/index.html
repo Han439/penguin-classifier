@@ -231,6 +231,7 @@
 			};
 
 			console.log(JSON.stringify(data))
+			console.log($(this).serialize())
 
 			if (isRadioValidated('island') && isRadioValidated('sex')) {
 
@@ -238,11 +239,12 @@
 				type: "POST",
 				url: url,
 				headers: {
-					'Content-type': 'application/json',
+					//'Content-type': 'application/json',
 					'X-CSRFToken': csrftoken,
+					'Accept': 'application/json; indent=4',
 				},
-				data: JSON.stringify(data),
-				contentType: "application/json; charset=utf-8",
+				data: $(this).serialize(), // default rest parser (form-urlencoded contentype)
+				// data: JSON.stringify(data)  // json rest parser (app/json contentype)
         		dataType: "json",
 
 				beforeSend: function() {
