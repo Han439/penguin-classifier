@@ -6,7 +6,7 @@
 
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
 
-	<link rel="stylesheet" type="text/css" href="{% static 'css/style6.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style8.css' %}">
 
 
 </head>
@@ -41,6 +41,7 @@
 					<div class="slide-container">
 						<input type="range" min="0" max="100" value="50" class="slider" name="bill_length_mm">
 						<div class="value"></div>
+						<span class="tooltip">50</span>
 					</div>
 				</div>
 
@@ -49,6 +50,7 @@
 					<div class="slide-container">
 						<input type="range" min="0" max="30" value="15" class="slider" name="bill_depth_mm">
 						<div class="value"></div>
+						<span class="tooltip">15</span>
 					</div>
 					
 				</div>
@@ -58,6 +60,7 @@
 					<div class="slide-container">
 						<input type="range" min="100" max="300" value="200" class="slider" name="flipper_length_mm">
 						<div class="value"></div>
+						<span class="tooltip">200</span>
 					</div>
 					
 				</div>
@@ -65,8 +68,9 @@
 				<div class="input-container">
 					<h4>Body Mass (g):</h4>
 					<div class="slide-container">
-						<input type="range" min="1000" max="8000" value="4500" class="slider" name="body_mass_g">
+						<input type="range" min="1000" max="8000" value="4500" class="slider" name="body_mass_g" data-measure="g">
 						<div class="value"></div>
+						<span class="tooltip">4500</span>
 					</div>
 					
 				</div>
@@ -168,12 +172,10 @@
 		function radioAlert() {
 			let alertBox = document.querySelector(".alert");
 			let alert = document.querySelector(".alert-container")
-			console.log(alertBox)
 			alertBox.classList.add("animate");
 
 			let alertBtn = document.querySelector('.alert-btn');
 			alertBtn.addEventListener('click', (e) => {
-				console.log(alertBox)
 				alertBox.classList.remove("animate");
 			})
 		}
@@ -193,7 +195,9 @@
 		for (i = 0; i < sliders.length; i++) {
 			sliders[i].oninput = function() {
 				let val = ((Number(this.value) - Number(this.min)) / (Number(this.max)-Number(this.min))) * 100
-				this.nextElementSibling.style.width = JSON.stringify(val) + "%"
+				$(this).siblings(".value").width(JSON.stringify(val) + "%")
+				$(this).siblings(".tooltip").html(this.value)
+				$(this).siblings(".tooltip").css("left", JSON.stringify(val) + "%")
 			}
 		}
 
