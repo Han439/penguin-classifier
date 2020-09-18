@@ -94,35 +94,35 @@ form.addEventListener('submit', function(e) {
 	if (isRadioValidated('island') && isRadioValidated('sex')) {
 
 		$.ajax({
-		type: "POST",
-		url: url,
-		headers: {
-			//'Content-type': 'application/json',
-			'X-CSRFToken': csrftoken,
-			'Accept': 'application/json; indent=4',
-		},
-		data: $(this).serialize(), // default rest parser (form-urlencoded contentype)
-		// data: JSON.stringify(data)  // json rest parser (app/json contentype)
-		dataType: "json",
+			type: "POST",
+			url: url,
+			headers: {
+				//'Content-type': 'application/json',
+				'X-CSRFToken': csrftoken,
+				'Accept': 'application/json; indent=4',
+			},
+			data: $(this).serialize(), // default rest parser (form-urlencoded contentype)
+			// data: JSON.stringify(data)  // json rest parser (app/json contentype)
+			dataType: "json",
 
-		beforeSend: function() {
-			$('.loading').fadeIn()
-		},
+			beforeSend: function() {
+				$('.loading').fadeIn()
+			},
 
-		complete: function() {
-			$('.loading').fadeOut()
-		},
+			complete: function() {
+				$('.loading').fadeOut()
+			},
 
-		success: function(res) {
-			console.log(res)
-			for (i = 0; i < results.length; i++) {
-				if (res.result == results[i].getAttribute('data-prediction'))
-					results[i].classList.remove('hidden')
-				else results[i].classList.add('hidden')
-			}
-		},
+			success: function(res) {
+				console.log(res)
+				for (i = 0; i < results.length; i++) {
+					if (res.result == results[i].getAttribute('data-prediction'))
+						results[i].classList.remove('hidden')
+					else results[i].classList.add('hidden')
+				}
+			},
 
-		//error: function() {}
+			//error: function() {}
 	})
 
 	}else{
