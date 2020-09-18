@@ -77,7 +77,7 @@ form = document.getElementById('filter-form');
 
 form.addEventListener('submit', function(e) {
 	e.preventDefault()
-	let url = 'https://mypenguinclassifier.herokuapp.com/api/dt-predict/';
+	let url = '/api/dt-predict/';
 
 	// construc json data to be sent
 	data = {};
