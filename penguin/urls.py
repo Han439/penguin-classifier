@@ -3,6 +3,6 @@ from . import views
 from .views import PredictView
 
 urlpatterns = [
-	path('api/dt-predict/', PredictView.as_view(), name='decision-tree-predict'),
+	path('api/dt-predict/', PredictView.as_view()),
 	path('', views.indexView, name='index')
 ]
