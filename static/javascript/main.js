@@ -6,7 +6,6 @@ $(window).on('load', function() {
 	loader.fadeOut(750, function() {
 		
 		content.fadeIn(500)
-		console.log(loader)
 	})
 
 })
@@ -88,8 +87,8 @@ form.addEventListener('submit', function(e) {
 		}else{ data[input[0]] = Number(input[1])}
 	};
 
-	console.log(JSON.stringify(data))
-	console.log($(this).serialize())
+	// console.log(JSON.stringify(data))
+	// console.log($(this).serialize())
 
 	if (isRadioValidated('island') && isRadioValidated('sex')) {
 
@@ -114,7 +113,6 @@ form.addEventListener('submit', function(e) {
 			},
 
 			success: function(res) {
-				console.log(res)
 				for (i = 0; i < results.length; i++) {
 					if (res.result == results[i].getAttribute('data-prediction'))
 						results[i].classList.remove('hidden')
