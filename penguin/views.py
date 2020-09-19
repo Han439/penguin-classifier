@@ -18,10 +18,10 @@ def indexView(request):
 class PredictView(APIView):
 
 	permission_classes = (permissions.AllowAny,)
-    http_method_names = ['get', 'head', 'post']
+	http_method_names = ['get', 'head', 'post']
 
-    def get(self, request, format=None):
-    	return Response({"example-data": {
+	def get(self, request, format=None):
+		return Response({"example-data": {
 				'island': 'Torgersen',
 				'bill_length_mm': 50,
 				'bill_depth_mm': 15,
