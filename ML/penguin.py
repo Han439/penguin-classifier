@@ -33,7 +33,7 @@ dt.fit(X_train, y_train)
 dt.score(X_test, y_test)
 
 # save to the disk
-joblib.dump(dt, './decision_tree.joblib', compress=True)
-joblib.dump(encoders, './encoders.joblib', compress=True)
-joblib.dump(category_cols, './categories.joblib', compress=True)
+joblib.dump(dt, './decision_tree.sav', compress=True)
+joblib.dump(encoders, './encoders.sav', compress=True)
+joblib.dump(category_cols, './categories.sav', compress=True)
 
